@@ -13,6 +13,7 @@ export default createGlobalStyle`
     font-size: 100%;
   }
   body {
+    overflow: hidden;
     font-family: 'No way', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     background: ${darkBlue};
     color: ${light}
