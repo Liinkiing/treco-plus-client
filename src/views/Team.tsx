@@ -7,6 +7,7 @@ import TeamMembers from "../components/ui/team/TeamMembers";
 import {APPNAV_HEIGHT} from "../styles/modules/variables";
 import {breakpoint} from "../styles/modules/mixins";
 import ErrorMessage from '../components/ui/ErrorMessage';
+import TeamBoards from "../components/ui/team/TeamBoards";
 
 type Props = RouteComponentProps<{ id: string }> & {
 
@@ -54,6 +55,7 @@ const Team: FunctionComponent<Props> = props => {
         <Content>
           <h1>Team {name}</h1>
           <p>{description}</p>
+          <TeamBoards boards={data!.node!.boards}/>
         </Content>
         <TeamMembers members={members}/>
       </TeamInner>
