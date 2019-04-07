@@ -3,16 +3,16 @@ import styled from 'styled-components'
 import {Link} from "@reach/router";
 import AuthManager from "../../services/AuthManager";
 import useViewer from "../../hooks/useViewer";
-import {darkCyan} from "../../styles/modules/colors";
 import Button from "./Button";
 import Container from "./Container";
+import {APPNAV_BACKGROUND, APPNAV_HEIGHT} from "../../styles/modules/variables";
 
 const LogoutButton = Button
 
 const AppNavInner = styled.nav`
-  height: 80px;
+  height: ${APPNAV_HEIGHT};
   width: 100%;
-  background: ${darkCyan};
+  background: ${APPNAV_BACKGROUND};
   display: flex;
   align-items: center;
   & a {

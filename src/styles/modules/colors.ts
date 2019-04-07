@@ -4,3 +4,5 @@ export const darkGreen = '#57a99a'
 export const darkBlue = '#2c3e50'
 export const darkCyan = '#4ca1af';
 export const dark = '#555151'
+export const black = '#000'
+export const white = '#FFF'

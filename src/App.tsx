@@ -8,6 +8,7 @@ import Login from "./views/Login";
 import Dashboard from "./views/Dashboard";
 import AppNav from "./components/ui/AppNav";
 import Profile from "./views/Profile";
+import {APPNAV_BACKGROUND, APPNAV_HEIGHT} from "./styles/modules/variables";
 
 const AppInner = styled.div`
   
@@ -17,7 +18,7 @@ const App: FunctionComponent = () => {
 
   return (
     <AppInner>
-      <Suspense fallback={<nav/>}>
+      <Suspense fallback={<nav style={{height: APPNAV_HEIGHT, background: APPNAV_BACKGROUND, width: '100%'}} />}>
         <AppNav/>
       </Suspense>
       <main>

@@ -1,0 +1,4 @@
+fragment TeamCardBadge_owner on User {
+  id
+  username
+}
