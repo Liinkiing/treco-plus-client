@@ -1,34 +1,30 @@
-import React, { FunctionComponent } from "react"
+import React, {FunctionComponent, Suspense} from "react"
 import styled from "styled-components"
-import useViewer from "./hooks/useViewer";
-import {Link, Router} from '@reach/router';
+import {Router} from '@reach/router';
 import Route from './components/Route';
 import Home from './views/Home';
 import NotFound from "./views/NotFound";
-import AuthManager from "./services/AuthManager";
 import Login from "./views/Login";
 import Dashboard from "./views/Dashboard";
+import AppNav from "./components/ui/AppNav";
+import Profile from "./views/Profile";
 
 const AppInner = styled.div`
   
 `
 
 const App: FunctionComponent = () => {
-  const viewer = useViewer()
-  const { isLoggedIn } = AuthManager
 
   return (
     <AppInner>
-      <nav>
-        <Link to="/">Home</Link>
-        {!isLoggedIn && <Link to="/login">Login</Link>}
-        {isLoggedIn && <Link to="/dashboard">Dashboard</Link>}
-        {isLoggedIn && <button onClick={AuthManager.logout}>Logout</button>}
-      </nav>
+      <Suspense fallback={<nav/>}>
+        <AppNav/>
+      </Suspense>
       <main>
         <Router>
           <Route component={Home} path="/"/>
           <Route component={Login} path="/login"/>
+          <Route component={Profile} path="/profile"/>
           <Route component={Dashboard} path="/dashboard"/>
           <Route component={NotFound} default/>
         </Router>

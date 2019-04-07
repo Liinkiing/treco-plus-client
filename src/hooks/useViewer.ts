@@ -1,7 +1,11 @@
-import {useViewerQuery, ViewerQueryViewer} from "../graphql/components";
+import {useViewerQuery, ViewerQueryVariables, ViewerQueryViewer} from "../graphql/components";
+import {QueryHookOptions} from "react-apollo-hooks";
 
-const useViewer = (): ViewerQueryViewer | null => {
+type Options = Exclude<QueryHookOptions<ViewerQueryVariables>, 'fetchPolicy'>
+
+const useViewer = (options?: Options): ViewerQueryViewer | null => {
   const {data, error, loading} = useViewerQuery({
+    ...options,
     fetchPolicy: "cache-first"
   })
 
