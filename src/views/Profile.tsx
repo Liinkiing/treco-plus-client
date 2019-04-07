@@ -2,6 +2,7 @@ import React, {FunctionComponent} from 'react'
 import styled from 'styled-components'
 import AuthManager from "../services/AuthManager";
 import {Redirect} from "@reach/router";
+import Page from "../components/Page";
 
 const ProfileInner = styled.div`
   
@@ -12,10 +13,12 @@ const Profile: FunctionComponent = () => {
     return <Redirect to="/login" noThrow/>
   }
   return (
-    <ProfileInner>
-      <h1>Profile</h1>
-      <p>Je suis le Profile</p>
-    </ProfileInner>
+    <Page>
+      <ProfileInner>
+        <h1>Profile</h1>
+        <p>Je suis le Profile</p>
+      </ProfileInner>
+    </Page>
   )
 }
 

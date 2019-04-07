@@ -1,5 +1,6 @@
 import React, {FunctionComponent} from 'react'
 import styled from 'styled-components'
+import Page from "../components/Page";
 
 const NotFoundInner = styled.div`
   
@@ -8,10 +9,12 @@ const NotFoundInner = styled.div`
 const NotFound: FunctionComponent = () => {
 
   return (
-    <NotFoundInner>
-      <h1>404</h1>
-      <p>Not found</p>
-    </NotFoundInner>
+    <Page>
+      <NotFoundInner>
+        <h1>404</h1>
+        <p>Not found</p>
+      </NotFoundInner>
+    </Page>
   )
 }
 

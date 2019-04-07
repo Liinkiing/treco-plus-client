@@ -6,6 +6,9 @@ import reset from "./modules/reset";
 export default createGlobalStyle`
   ${fonts};
   ${reset};
+  * {
+    box-sizing: border-box;
+  }
   html {
     font-size: 100%;
   }

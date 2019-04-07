@@ -1,5 +1,6 @@
 import React, {FunctionComponent} from 'react'
 import styled from 'styled-components'
+import Page from "../components/Page";
 
 const HomeInner = styled.div`
   
@@ -8,10 +9,12 @@ const HomeInner = styled.div`
 const Home: FunctionComponent = () => {
 
   return (
-    <HomeInner>
-      <h1>Home</h1>
-      <p>Je suis la home</p>
-    </HomeInner>
+    <Page>
+      <HomeInner>
+        <h1>Home</h1>
+        <p>Je suis la home</p>
+      </HomeInner>
+    </Page>
   )
 }
 

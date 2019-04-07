@@ -5,11 +5,13 @@ import AuthManager from "../../services/AuthManager";
 import useViewer from "../../hooks/useViewer";
 import {darkCyan} from "../../styles/modules/colors";
 import Button from "./Button";
+import Container from "./Container";
 
 const LogoutButton = Button
 
 const AppNavInner = styled.nav`
   height: 80px;
+  width: 100%;
   background: ${darkCyan};
   display: flex;
   align-items: center;
@@ -23,16 +25,18 @@ const AppNavInner = styled.nav`
 `
 
 const AppNav: FunctionComponent = () => {
-  const viewer = useViewer({ suspend: true })
-  const { isLoggedIn } = AuthManager
+  const viewer = useViewer({suspend: true})
+  const {isLoggedIn} = AuthManager
 
   return (
     <AppNavInner>
-      <Link to="/">Home</Link>
-      {!isLoggedIn && <Link to="/login">Login</Link>}
-      {isLoggedIn && <Link to="/dashboard">Dashboard</Link>}
-      {isLoggedIn && viewer && <Link to="/profile">{viewer.username}</Link>}
-      {isLoggedIn && <LogoutButton onClick={AuthManager.logout}>Logout</LogoutButton>}
+      <Container>
+        <Link to="/">Home</Link>
+        {!isLoggedIn && <Link to="/login">Login</Link>}
+        {isLoggedIn && <Link to="/dashboard">Dashboard</Link>}
+        {isLoggedIn && viewer && <Link to="/profile">{viewer.username}</Link>}
+        {isLoggedIn && <LogoutButton onClick={AuthManager.logout}>Logout</LogoutButton>}
+      </Container>
     </AppNavInner>
   )
 }
