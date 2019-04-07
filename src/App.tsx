@@ -9,6 +9,8 @@ import Dashboard from "./views/Dashboard";
 import AppNav from "./components/ui/AppNav";
 import Profile from "./views/Profile";
 import {APPNAV_BACKGROUND, APPNAV_HEIGHT} from "./styles/modules/variables";
+import Team from "./views/Team";
+import Loaders from "./components/ui/Loaders";
 
 const AppInner = styled.div`
   
@@ -22,13 +24,16 @@ const App: FunctionComponent = () => {
         <AppNav/>
       </Suspense>
       <main>
-        <Router>
-          <Route component={Home} path="/"/>
-          <Route component={Login} path="/login"/>
-          <Route component={Profile} path="/profile"/>
-          <Route component={Dashboard} path="/dashboard"/>
-          <Route component={NotFound} default/>
-        </Router>
+          <Suspense fallback={<Loaders count={1} loader="list"/>}>
+            <Router>
+              <Route component={Home} path="/"/>
+              <Route component={Login} path="/login"/>
+              <Route component={Profile} path="/profile"/>
+              <Route component={Team} path="/team/:id"/>
+              <Route component={Dashboard} path="/dashboard"/>
+              <Route component={NotFound} default/>
+            </Router>
+          </Suspense>
       </main>
     </AppInner>
   );

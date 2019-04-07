@@ -1,0 +1,18 @@
+#import TeamMembers_members from './fragments/TeamMembers_members.graphql'
+
+query TeamQuery($id: ID!) {
+  node(id: $id) {
+    ... on Team {
+      name
+      description
+      owner {
+        id
+        username
+        email
+      }
+      members {
+        ...TeamMembers_members
+      }
+    }
+  }
+}

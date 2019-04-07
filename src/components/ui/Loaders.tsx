@@ -1,6 +1,7 @@
 import React, {FunctionComponent, ReactNode} from 'react'
 import { BulletList, Code, Facebook, Instagram, List } from 'react-content-loader'
 import styled from 'styled-components'
+import Container from "./Container";
 
 interface Props {
   count: number,
@@ -40,9 +41,11 @@ const Loaders: FunctionComponent<Props> = props => {
   }
 
   return (
-    <LoadersInner>
-      {[...Array(count)].map((_, i) => <Component key={i} style={{ width, height }}/>)}
-    </LoadersInner>
+    <Container>
+      <LoadersInner>
+        {[...Array(count)].map((_, i) => <Component key={i} style={{ width, height }}/>)}
+      </LoadersInner>
+    </Container>
   )
 }
 
