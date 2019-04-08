@@ -35,15 +35,20 @@ const AppInner = styled.div`
   
 `
 
-const App: FunctionComponent = () => {
+const Main = styled.main`
+  position: fixed;
+  width: 100%;
+  margin-top: ${APPNAV_HEIGHT};
+`
 
+const App: FunctionComponent = () => {
   return (
     <AppInner>
-      <Suspense fallback={<nav style={{height: APPNAV_HEIGHT, background: APPNAV_BACKGROUND, width: '100%'}} />}>
+      <Suspense fallback={<nav style={{position: 'fixed', zIndex: 1, height: APPNAV_HEIGHT, background: APPNAV_BACKGROUND, width: '100%'}} />}>
         <AppNav/>
       </Suspense>
-      <main>
-          <Suspense fallback={<Loaders count={1} loader="list"/>}>
+      <Main>
+          <Suspense fallback={<div style={{ padding: '40px'}}><Loaders count={1} loader="list"/></div>}>
             <PosedRouter>
               <Route component={Home} path="/"/>
               <Route component={Login} path="/login"/>
@@ -54,7 +59,7 @@ const App: FunctionComponent = () => {
               <Route component={NotFound} default/>
             </PosedRouter>
           </Suspense>
-      </main>
+      </Main>
     </AppInner>
   );
 }

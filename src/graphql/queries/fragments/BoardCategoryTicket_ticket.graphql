@@ -5,6 +5,7 @@ fragment BoardCategoryTicket_ticket on Ticket {
     username
     email
   }
+  completion
   name
   content
   position

@@ -15,9 +15,9 @@ const AppNavInner = styled.nav`
   background: ${APPNAV_BACKGROUND};
   display: flex;
   align-items: center;
-  & a {
-    
-  }
+  position: fixed;
+  top: 0;
+  z-index: 1;
   ${LogoutButton} {
     margin-left: auto;
     margin-right: 20px;

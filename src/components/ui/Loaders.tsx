@@ -15,7 +15,10 @@ const LoadersInner = styled.div`
   flex-wrap: wrap;
   width: 100%;
   & > * {
-    margin: 20px;
+    margin-right: 20px;
+    &:last-of-type {
+      margin-right: 0;
+    }
   }
 `
 

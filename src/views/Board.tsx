@@ -21,6 +21,9 @@ const BoardInner = styled.div<StyledProps>`
   display: flex;
   flex-direction: column;
   height: calc(100vh - ${APPNAV_HEIGHT});
+  & h1 {
+    margin-top: 0;
+  }
   ${({ board }: StyledProps) => board.background ? css`
     position: relative;
     &:before {
@@ -91,7 +94,7 @@ const BoardSuspensed: FunctionComponent<Props> = props => {
 }
 
 const Board: FunctionComponent<Props> = props => (
-  <Suspense fallback={<Loaders count={2} loader="code"/>}>
+  <Suspense fallback={<div style={{padding: '40px'}}><Loaders count={2} loader="code"/></div>}>
     <BoardSuspensed {...props}/>
   </Suspense>
 )

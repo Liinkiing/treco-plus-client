@@ -4,6 +4,7 @@ import {breakpoint} from "../../styles/modules/mixins";
 
 const ContainerInner = styled.div`
   all: inherit;
+  position: relative;
   max-width: 100%;
   width: 100%;
   margin: auto 2rem;

@@ -21,6 +21,9 @@ const TeamInner = styled.div`
     width: 100%;
     order: -1
   }
+  & h1 {
+    margin-top: 0;
+  }
   ${breakpoint("tablet", css`
     flex-direction: row;
     ${TeamMembers} {
