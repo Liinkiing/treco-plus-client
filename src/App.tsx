@@ -12,6 +12,7 @@ import Profile from "./views/Profile";
 import {APPNAV_BACKGROUND, APPNAV_HEIGHT} from "./styles/modules/variables";
 import Team from "./views/Team";
 import Loaders from "./components/ui/Loaders";
+import Board from "./views/Board";
 
 const RoutesContainer = posed.div({
   enter: {opacity: 1, beforeChildren: true, x: 0},
@@ -48,6 +49,7 @@ const App: FunctionComponent = () => {
               <Route component={Login} path="/login"/>
               <Route component={Profile} path="/profile"/>
               <Route component={Team} path="/team/:id"/>
+              <Route component={Board} path="/team/:teamId/board/:boardId"/>
               <Route component={Dashboard} path="/dashboard"/>
               <Route component={NotFound} default/>
             </PosedRouter>

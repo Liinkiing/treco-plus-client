@@ -1,5 +1,3 @@
-#import TeamMembers_members from './fragments/TeamMembers_members.graphql'
-
 query TeamQuery($id: ID!) {
   node(id: $id) {
     ... on Team {

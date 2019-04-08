@@ -1,0 +1,7 @@
+fragment Board_board on Board {
+  name
+  background
+  categories {
+    ...BoardCategory_category
+  }
+}

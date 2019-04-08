@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react'
 import styled, {css} from 'styled-components'
 import Page from "../components/Page";
-import {RouteComponentProps, RouterProps} from "@reach/router";
+import {RouteComponentProps} from "@reach/router";
 import {useTeamQuery} from "../graphql/components";
 import TeamMembers from "../components/ui/team/TeamMembers";
 import {APPNAV_HEIGHT} from "../styles/modules/variables";

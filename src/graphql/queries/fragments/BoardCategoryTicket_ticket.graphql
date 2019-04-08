@@ -1,0 +1,13 @@
+fragment BoardCategoryTicket_ticket on Ticket {
+  id
+  author {
+    id
+    username
+    email
+  }
+  name
+  content
+  position
+  priority
+  endDate
+}

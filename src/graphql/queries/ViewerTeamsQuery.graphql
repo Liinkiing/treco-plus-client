@@ -1,5 +1,3 @@
-#import TeamCardBadge_owner from './fragments/TeamCardBadge_owner.graphql'
-
 query ViewerTeamsQuery {
   viewerTeams {
     id
