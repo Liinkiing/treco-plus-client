@@ -1,9 +1,9 @@
 import React, {FunctionComponent, Suspense} from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import Page from "../components/Page";
 import {RouteComponentProps} from "@reach/router";
-import {APPNAV_HEIGHT} from "../styles/modules/variables";
-import {useBoardQuery} from "../graphql/components";
+import {APPNAV_HEIGHT, MAIN_GRADIENT} from "../styles/modules/variables";
+import {BoardBoardFragment, useBoardQuery} from "../graphql/components";
 import ErrorMessage from "../components/ui/ErrorMessage";
 import Loaders from "../components/ui/Loaders";
 import BoardCategory from "../components/ui/BoardCategory";
@@ -13,10 +13,35 @@ type Props = RouteComponentProps<{
   boardId: string
 }> & {}
 
-const BoardInner = styled.div`
+interface StyledProps {
+  board: BoardBoardFragment
+}
+
+const BoardInner = styled.div<StyledProps>`
   display: flex;
   flex-direction: column;
   height: calc(100vh - ${APPNAV_HEIGHT});
+  ${({ board }: StyledProps) => board.background ? css`
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-image: ${MAIN_GRADIENT};
+      opacity: 0.7; 
+      z-index: 0;
+    }
+    > * {
+      position: relative;
+      z-index: 1;
+    }
+    background: url(${board.background});
+    background-size: cover;
+    
+  ` : ''}
 `
 
 const CategoriesContainer = styled.ol`
@@ -51,7 +76,7 @@ const BoardSuspensed: FunctionComponent<Props> = props => {
   }
 
   return (
-    <BoardInner {...props}>
+    <BoardInner {...props} board={data!.node!}>
       <Content>
         <h1>Board</h1>
         <CategoriesContainer>

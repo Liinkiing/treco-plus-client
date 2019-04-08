@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components"
 import fonts from "./modules/fonts";
 import {darkBlue, darkCyan, light} from "./modules/colors";
 import reset from "./modules/reset";
+import {MAIN_GRADIENT} from "./modules/variables";
 
 export default createGlobalStyle`
   ${fonts};
@@ -17,7 +18,7 @@ export default createGlobalStyle`
     font-family: 'No way', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     background: ${darkBlue};
     color: ${light}
-    background: linear-gradient(to bottom, ${darkBlue}, ${darkCyan});
+    background: ${MAIN_GRADIENT};
     background-attachment: fixed;
   }
 `
