@@ -42,7 +42,6 @@ const Team: FunctionComponent<Props> = props => {
     suspend: true,
     variables: { id: id! }
   })
-
   if (error) {
     return <ErrorMessage error={error}/>
   }
