@@ -13,6 +13,8 @@ import {APPNAV_BACKGROUND, APPNAV_HEIGHT} from "./styles/modules/variables";
 import Team from "./views/Team";
 import Loaders from "./components/ui/Loaders";
 import Board from "./views/Board";
+import AnonRoute from "./components/AnonRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const RoutesContainer = posed.div({
   enter: {opacity: 1, beforeChildren: true, x: 0},
@@ -51,11 +53,11 @@ const App: FunctionComponent = () => {
           <Suspense fallback={<div style={{ padding: '40px'}}><Loaders count={1} loader="list"/></div>}>
             <PosedRouter>
               <Route component={Home} path="/"/>
-              <Route component={Login} path="/login"/>
-              <Route component={Profile} path="/profile"/>
-              <Route component={Team} path="/team/:id"/>
-              <Route component={Board} path="/team/:teamId/board/:boardId"/>
-              <Route component={Dashboard} path="/dashboard"/>
+              <AnonRoute component={Login} path="/login"/>
+              <ProtectedRoute component={Profile} path="/profile"/>
+              <ProtectedRoute component={Team} path="/team/:id"/>
+              <ProtectedRoute component={Board} path="/team/:teamId/board/:boardId"/>
+              <ProtectedRoute component={Dashboard} path="/dashboard"/>
               <Route component={NotFound} default/>
             </PosedRouter>
           </Suspense>
