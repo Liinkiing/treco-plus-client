@@ -19,7 +19,7 @@ const TeamCardInner = styled.div`
 `
 
 const TeamCard: FunctionComponent<Props> = props => {
-  const { team } = props
+  const {team} = props
   return (
     <TeamCardInner {...props}>
       {team.name}

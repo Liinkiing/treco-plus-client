@@ -1,0 +1,127 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+"Fetches an object given its ID"
+interface Node {
+  "The ID of an object"
+  id: ID!
+}
+
+"I am the Board description!"
+type Board implements Node {
+  background: URI
+  categories: [Category!]!
+  "The ID of an object"
+  id: ID!
+  name: String!
+  team: Team!
+}
+
+"Fetches an object given its ID"
+type Category implements Node {
+  board: Board!
+  "The ID of an object"
+  id: ID!
+  name: String!
+  position: Int!
+  tickets: [Ticket!]!
+}
+
+type ChangeTicketPositionPayload {
+  "Get the newly updated board"
+  board: Board!
+  clientMutationId: String
+}
+
+type LoginUserPayload {
+  clientMutationId: String
+  "The refresh token associated to the successfully logged in user"
+  refreshToken: String!
+  "The JWT token associated to the successfully logged in user"
+  token: String!
+}
+
+type Mutation {
+  "Change a ticket position"
+  changeTicketPosition(input: ChangeTicketPositionInput!): ChangeTicketPositionPayload
+  "Log the user"
+  loginUser(input: LoginUserInput!): LoginUserPayload
+}
+
+type Query {
+  "Fetches an object given its ID"
+  node(
+    #The ID of an object
+    id: ID!
+  ): Node
+  "The currently authenticated user."
+  viewer: User!
+  "Get the list of viewer teams"
+  viewerTeams: [Team!]!
+}
+
+"Fetches an object given its ID"
+type Team implements Node {
+  boards: [Board!]!
+  description: String
+  "The ID of an object"
+  id: ID!
+  members: [User!]!
+  name: String!
+  owner: User!
+}
+
+"Fetches an object given its ID"
+type Ticket implements Node {
+  author: User!
+  category: Category!
+  completion: Int
+  content: String
+  endDate: DateTime
+  "The ID of an object"
+  id: ID!
+  name: String!
+  position: Int!
+  priority: Int
+}
+
+"Fetches an object given its ID"
+type User implements Node {
+  email: String!
+  "The ID of an object"
+  id: ID!
+  ownedTeams: [Team!]!
+  teams: [Team!]!
+  tickets: [Ticket!]!
+  username: String!
+}
+
+input ChangeTicketPositionInput {
+  clientMutationId: String
+  "From what ID the ticket is being moved"
+  fromCategoryId: ID!
+  "In what index (position) the ticket will be moved to"
+  newPosition: Int!
+  "The ID of the ticket being moved"
+  ticketId: ID!
+  "In what ID the ticket will be moved to"
+  toCategoryId: ID!
+}
+
+input LoginUserInput {
+  clientMutationId: String
+  "I am the email description"
+  email: String!
+  "I am the password description"
+  password: String!
+}
+
+
+scalar DateTime
+
+"An RFC 3986, RFC 3987, and RFC 6570 (level 4) compliant URI string."
+scalar URI

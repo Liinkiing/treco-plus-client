@@ -1,9 +1,16 @@
-import React, {FunctionComponent, Suspense} from 'react'
+import React, {FunctionComponent, Suspense, useCallback} from 'react'
 import styled, {css} from 'styled-components'
-import Page from "../components/Page";
+import {
+  DragDropContext,
+  OnDragEndResponder
+} from 'react-beautiful-dnd';
 import {RouteComponentProps} from "@reach/router";
 import {APPNAV_HEIGHT, MAIN_GRADIENT} from "../styles/modules/variables";
-import {BoardBoardFragment, useBoardQuery} from "../graphql/components";
+import {
+  BoardBoardFragment,
+  useBoardQuery,
+  useChangeTicketPositionMutation
+} from "../graphql/components";
 import ErrorMessage from "../components/ui/ErrorMessage";
 import Loaders from "../components/ui/Loaders";
 import BoardCategory from "../components/ui/BoardCategory";
@@ -24,7 +31,7 @@ const BoardInner = styled.div<StyledProps>`
   & h1 {
     margin-top: 0;
   }
-  ${({ board }: StyledProps) => board.background ? css`
+  ${({board}: StyledProps) => board.background ? css`
     position: relative;
     &:before {
       content: '';
@@ -69,10 +76,93 @@ const Content = styled.div`
 
 const BoardSuspensed: FunctionComponent<Props> = props => {
   const {boardId} = props
+  const changeTicketPositionMutation = useChangeTicketPositionMutation()
   const {data, error} = useBoardQuery({
     variables: {id: boardId!},
     suspend: true
   })
+  const getChangeTicketPositionOptimisticResponse = useCallback((
+    {newPosition, fromIndex, fromCategoryId, toCategoryId, ticketId}
+      : { newPosition: number, fromIndex: number, fromCategoryId: string, toCategoryId: string, ticketId: string }
+    ) => {
+      const newCategories = data!.node!.categories!
+      const movingToUp = newPosition < fromIndex
+      if (fromCategoryId === toCategoryId) {
+        const searchedCategory = newCategories.find(cat => cat.id === toCategoryId)
+        if (searchedCategory) {
+          const movedTicket = searchedCategory.tickets.find(t => t.position === fromIndex)
+          if (movedTicket) {
+            movedTicket.position = newPosition
+          }
+          if (movingToUp) {
+            searchedCategory.tickets = searchedCategory.tickets.map(ticket =>
+              ticket.id !== ticketId && ticket.position >= newPosition ? {
+                ...ticket,
+                position: ticket.position + 1
+              } : ticket
+            )
+          } else {
+            searchedCategory.tickets = searchedCategory.tickets.map(ticket =>
+              ticket.id !== ticketId && ticket.position <= newPosition ? {
+                ...ticket,
+                position: ticket.position - 1
+              } : ticket
+            )
+          }
+        }
+      } else {
+        const fromCategory = newCategories.find(cat => cat.id === fromCategoryId)
+        const toCategory = newCategories.find(cat => cat.id === toCategoryId)
+        if (fromCategory && toCategory) {
+          const movedTicket = fromCategory.tickets.find(ticket => ticket.id === ticketId)
+          if (movedTicket) {
+            fromCategory.tickets = fromCategory.tickets.filter(ticket => ticket.id !== ticketId)
+            toCategory.tickets.push({...movedTicket, position: newPosition})
+            toCategory.tickets = toCategory.tickets.map(ticket =>
+              ticket.id !== ticketId && ticket.position >= newPosition ? {
+                ...ticket,
+                position: ticket.position + 1
+              } : ticket
+            )
+          }
+        }
+      }
+      return {
+        __typename: 'Mutation',
+        changeTicketPosition: {
+          __typename: 'ChangeTicketPositionPayload',
+          board: {
+            __typename: 'Board',
+            name: data!.node!.name,
+            background: data!.node!.background,
+            id: boardId,
+            categories: newCategories
+          }
+        }
+      };
+    }
+  , [data])
+
+  const onDragEnd: OnDragEndResponder = async (result) => {
+    if (result && result.draggableId && result.destination && result.source) {
+      const {
+        source: {droppableId: fromCategoryId, index: fromIndex},
+        destination: {index: newPosition, droppableId: toCategoryId},
+        draggableId: ticketId
+      } = result
+      await changeTicketPositionMutation({
+        variables: {input: {ticketId, fromCategoryId, toCategoryId, newPosition}},
+        optimisticResponse: getChangeTicketPositionOptimisticResponse({
+          newPosition,
+          fromIndex,
+          fromCategoryId,
+          toCategoryId,
+          ticketId
+        })
+      })
+
+    }
+  }
 
   if (error) {
     return <ErrorMessage error={error}/>
@@ -82,12 +172,14 @@ const BoardSuspensed: FunctionComponent<Props> = props => {
     <BoardInner {...props} board={data!.node!}>
       <Content>
         <h1>Board</h1>
-        <CategoriesContainer>
-          {data!.node!.categories!
-            .sort((a, b) => a.position < b.position ? -1 : 1)
-            .map(category => <BoardCategory key={category.id} category={category}/>)
-          }
-        </CategoriesContainer>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <CategoriesContainer>
+            {data!.node!.categories!
+              .sort((a, b) => a.position < b.position ? -1 : 1)
+              .map(category => <BoardCategory key={category.id} category={category}/>)
+            }
+          </CategoriesContainer>
+        </DragDropContext>
       </Content>
     </BoardInner>
   )

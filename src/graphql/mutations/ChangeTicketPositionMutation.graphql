@@ -1,0 +1,7 @@
+mutation ChangeTicketPositionMutation($input: ChangeTicketPositionInput!) {
+  changeTicketPosition(input: $input) {
+    board {
+      ...Board_board
+    }
+  }
+}

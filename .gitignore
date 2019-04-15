@@ -19,7 +19,7 @@
 .env.production.local
 /.idea
 src/graphql/components.tsx
-graphql.config.json
+.graphqlconfig
 
 npm-debug.log*
 yarn-debug.log*

@@ -19,7 +19,7 @@ const TeamInner = styled.div`
   height: calc(100vh - ${APPNAV_HEIGHT});
   ${TeamMembers} {
     width: 100%;
-    order: -1
+    order: -1;
   }
   & h1 {
     margin-top: 0;
@@ -30,12 +30,14 @@ const TeamInner = styled.div`
       min-width: 300px;
       max-width: 400px;
       height: 100%;
+      flex: 1;
       order: unset;
     }
   `)}
 `
 
 const Content = styled.div`
+  flex: 3;
   padding: 2rem;
 `
 

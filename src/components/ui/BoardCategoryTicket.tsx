@@ -41,4 +41,4 @@ const BoardCategoryTicket: FunctionComponent<Props> = props => {
   )
 }
 
-export default styled(BoardCategoryTicket)``
+export default styled(BoardCategoryTicket)<Props>``

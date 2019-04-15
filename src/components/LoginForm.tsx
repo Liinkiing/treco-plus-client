@@ -12,7 +12,7 @@ const LoginForm: FunctionComponent = () => {
   const email = useInput('')
   const password = useInput('')
   const loginUser = useLoginUserMutation({
-    variables: { input: { email: email.value, password: password.value } }
+    variables: {input: {email: email.value, password: password.value}}
   })
 
   const onSubmit: FormEventHandler = async e => {
@@ -28,9 +28,9 @@ const LoginForm: FunctionComponent = () => {
 
   return (
     <LoginFormInner onSubmit={onSubmit}>
-        <input type="text" {...email} />
-        <input type="password" {...password} />
-        <button type="submit">Submit</button>
+      <input type="text" {...email} />
+      <input type="password" {...password} />
+      <button type="submit">Submit</button>
     </LoginFormInner>
   )
 }
